@@ -4,15 +4,28 @@ def round_nearest(float_num)
   ((float_num * 20).ceil / 20.0).round(2)
 end
 
-def calculate_taxes(product)
-  imported_tax = product[:imported] ? round_nearest((product[:price] * 5 / 100)) : 0
-  basic_tax = product[:taxable] ? round_nearest((product[:price] * 10 / 100)) : 0
+def imported_taxes(price, imported)
+  imported ? round_nearest((price * 5 / 100)) : 0
+end
 
-  total_taxes = BigDecimal(basic_tax, 10) + BigDecimal(imported_tax, 10)
+def basic_taxes(price, taxable)
+  taxable ? round_nearest((price * 10 / 100)) : 0
+end
+
+def calculate_total_taxes(basic_tax, imported_tax)
+  BigDecimal(basic_tax, 10) + BigDecimal(imported_tax, 10)
+end
+
+def calculate_taxes(product)
+  imported_tax = imported_taxes(product[:price], product[:imported])
+  basic_tax = basic_taxes(product[:price], product[:taxable])
+
+  total_taxes = calculate_total_taxes(basic_tax, imported_tax)
   price_with_taxes = (BigDecimal(product[:price], 10) + total_taxes)
+  
   {
     total_price: (price_with_taxes * BigDecimal(product[:qty], 10)).to_f,
-    taxes: (total_taxes * BigDecimal(product[:qty], 10)).to_f,
+    taxes: (total_taxes * BigDecimal(product[:qty], 10)).to_f
   }
 end
 
