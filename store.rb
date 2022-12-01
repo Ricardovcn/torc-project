@@ -11,3 +11,15 @@ def calculate_taxes(product)
   price_with_taxes = (BigDecimal(product[:price], 10) + BigDecimal(basic_tax, 10) + BigDecimal(imported_tax, 10))
   (price_with_taxes * BigDecimal(product[:qty], 10)).to_f
 end
+
+def generate_receipt_details(products)
+  prices_list_with_taxes = products.map do |product|
+    calculate_taxes(product)
+  end
+
+  {
+    products: prices_list_with_taxes,
+    #sales_taxes: nil,
+    total: prices_list_with_taxes.sum
+  }
+end
