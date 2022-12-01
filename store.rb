@@ -22,7 +22,7 @@ def calculate_taxes(product)
 
   total_taxes = calculate_total_taxes(basic_tax, imported_tax)
   price_with_taxes = (BigDecimal(product[:price], 10) + total_taxes)
-  
+
   {
     total_price: (price_with_taxes * BigDecimal(product[:qty], 10)).to_f,
     taxes: (total_taxes * BigDecimal(product[:qty], 10)).to_f
@@ -44,4 +44,13 @@ def generate_receipt_details(products)
     sales_taxes: total_taxes.to_f,
     total: products_with_taxes.sum
   }
+end
+
+def print_receipt(products, receipt)
+  products.each_with_index do |product, i|
+    imported = product[:imported] ? 'imported' : ''
+    puts "#{product[:qty]} #{imported}  #{product[:name]}: #{format('%.2f', receipt[:products][i])}"
+  end
+  puts "Sales Taxes: #{format('%.2f', receipt[:sales_taxes])}"
+  puts "Total: #{format('%.2f', receipt[:total])}"
 end
