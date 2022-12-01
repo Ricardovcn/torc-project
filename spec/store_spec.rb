@@ -1,4 +1,4 @@
-require_relative '../sales'
+require_relative '../store'
 
 input_1 = {
   products: [
