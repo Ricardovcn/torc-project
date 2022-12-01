@@ -74,46 +74,46 @@ input_3 = [
 
 expected_output = {
   products: [24.98, 16.49, 0.85],
-  #sales_taxes: 1.50,
+  sales_taxes: 1.50,
   total: 42.32,
 }
 
 expected_output_2 = {
   products: [10.50, 54.65],
-  #sales_taxes: 7.65,
+  sales_taxes: 7.65,
   total: 65.15,
 }
 
 expected_output_3 = {
   products: [32.19, 20.89, 9.75, 35.55],
-  #sales_taxes: 7.90,
+  sales_taxes: 7.90,
   total: 98.38,
 }
 
 
 describe 'calculate_taxes' do
   context "input 1" do
-    it { expect(calculate_taxes(input_1[0])).to be(24.98) }
+    it { expect(calculate_taxes(input_1[0])).to eq({ total_price: 24.98, taxes: 0.0 }) }
 
-    it { expect(calculate_taxes(input_1[1])).to be(16.49) }
+    it { expect(calculate_taxes(input_1[1])).to eq({ total_price: 16.49, taxes: 1.50 }) }
 
-    it { expect(calculate_taxes(input_1[2])).to be(0.85) }
+    it { expect(calculate_taxes(input_1[2])).to eq({ total_price: 0.85, taxes: 0.0 }) }
   end
 
   context 'input 2' do
-    it { expect(calculate_taxes(input_2[0])).to be(10.50) }
+    it { expect(calculate_taxes(input_2[0])).to eq({ total_price: 10.50, taxes: 0.50 }) }
 
-    it { expect(calculate_taxes(input_2[1])).to be(54.65) }
+    it { expect(calculate_taxes(input_2[1])).to eq({ total_price: 54.65, taxes: 7.15 }) }
   end
 
   context 'input 3' do
-    it { expect(calculate_taxes(input_3[0])).to be(32.19) }
+    it { expect(calculate_taxes(input_3[0])).to eq({ total_price: 32.19, taxes: 4.20 }) }
 
-    it { expect(calculate_taxes(input_3[1])).to be(20.89) }
+    it { expect(calculate_taxes(input_3[1])).to eq({ total_price: 20.89, taxes: 1.90 }) }
 
-    it { expect(calculate_taxes(input_3[2])).to be(9.75) }
+    it { expect(calculate_taxes(input_3[2])).to eq({ total_price: 9.75, taxes: 0.0 }) }
 
-    it { expect(calculate_taxes(input_3[3])).to be(35.55) }
+    it { expect(calculate_taxes(input_3[3])).to eq({ total_price: 35.55, taxes: 1.80 }) }
   end
 end
 
